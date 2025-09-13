@@ -1,0 +1,19 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f5f7fa;
+  font-family: Arial, sans-serif;
+}
+
+.content {
+ 
+  padding: 1rem;
+}
+
+.section-title {
+  margin: 1rem 0;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}

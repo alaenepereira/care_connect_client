@@ -1,7 +1,39 @@
 import './App.css'
+import React, { Children, useState } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import LoginPage from './Pages/Login'
+import ForgotPasswordPage from './Pages/Login/ForgotPassword'
+import { Navigate } from 'react-router-dom'
+import Register from './Components/Register'
+import Header from './Components/Header'
+import Home from './Pages/home'
+
+
+
 
 function App() {
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  const handleLogin = () =>{
+    setIsAuthenticated(true)
+  };
+
+  const PrivateRoute = ({children}) =>{
+    return isAuthenticated ? children : <Navigate to="/login" />
+  }
+  return(
+    <BrowserRouter>
+    <Routes>
+      <Route path='/' element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />}></Route>
+      <Route path='/login' element={<LoginPage onLogin={handleLogin}/>}></Route>
+      <Route path='/register' element={<Register/>}></Route>
+      <Route path='/forgot-password' element={<ForgotPasswordPage/>}></Route>
+      <Route path='/home' element={<Home />}></Route>
+       <Route path='/header' element={<Header/>}></Route>
+    </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App
