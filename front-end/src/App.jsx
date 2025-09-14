@@ -11,6 +11,7 @@ import Home from './Pages/home'
 
 
 
+
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -31,6 +32,8 @@ function App() {
       <Route path='/forgot-password' element={<ForgotPasswordPage/>}></Route>
       <Route path='/home' element={<Home />}></Route>
        <Route path='/header' element={<Header/>}></Route>
+       {/* <Route path='/professional' element={<ProfessionalPage/>}></Route> */}
+
     </Routes>
     </BrowserRouter>
   )

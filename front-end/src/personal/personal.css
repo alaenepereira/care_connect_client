@@ -1,0 +1,39 @@
+.createlist {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  .createlist div {
+    margin-bottom: 10px;
+  }
+  
+  .createlist label {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  button {
+    background-color: aqua;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+body{
+    display:flex;
+    justify-content: center;
+    background-color:#b2f2bb;
+} 
+
+.botaoid{
+    background-color: aqua;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
