@@ -1,0 +1,69 @@
+/* Estilo para fixar o menu no topo */
+.navbar {
+  background-color: #333;
+  padding: 10px 20px;
+  position: fixed; /* Isso fixa o elemento na tela */
+  top: 0; /* Cola o elemento no topo */
+  left: 0; /* Cola o elemento no lado esquerdo */
+  width: 100%; /* Garante que o elemento ocupe toda a largura */
+  z-index: 1000; /* Garante que o menu fique acima de outros elementos */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra suave */
+}
+
+.navbar-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.navbar-links li {
+  position: relative;
+  display: inline-block;
+}
+
+.navbar-links li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: background-color 0.3s ease; /* Transição para o hover */
+}
+
+/* Melhora a cor de hover do menu principal */
+.navbar-links li a:hover,
+.dropdown:hover .dropbtn {
+  background-color: #555; /* Um cinza um pouco mais claro */
+}
+
+/* Estilo do menu suspenso */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #444; /* Cor de fundo escura para melhor contraste */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  /* Estilo dos links dentro do dropdown */
+  .dropdown-content a {
+    color: #fff; /* Garante que a cor do texto seja branca */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  /* Melhora a cor de hover dos itens do dropdown */
+  .dropdown-content a:hover {
+    background-color: #666; /* Uma cor um pouco mais clara ao passar o mouse */
+  }
+  
+  /* Mostra o menu suspenso ao passar o mouse */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
