@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-// Corrigindo o caminho para a página Home
-import Home from './Pages/Home.jsx';
+
 // Corrigindo o caminho para a página de Cadastro de Paciente
 import RegisterPatient from './Pages/Patient/RegisterPatient.jsx';
 // Importando a nova página de listagem
