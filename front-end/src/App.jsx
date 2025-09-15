@@ -7,8 +7,8 @@ import { Navigate } from 'react-router-dom'
 import Register from './Components/Register'
 import Header from './Components/Header'
 import Home from './Pages/home'
-
-
+import BottomNavbar from './Components/Button/BottomNav'
+import Dashboard from './Pages/Dashboard'
 
 
 
@@ -25,6 +25,7 @@ function App() {
   }
   return(
     <BrowserRouter>
+    <BottomNavbar/>
     <Routes>
       <Route path='/' element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />}></Route>
       <Route path='/login' element={<LoginPage onLogin={handleLogin}/>}></Route>
@@ -32,6 +33,7 @@ function App() {
       <Route path='/forgot-password' element={<ForgotPasswordPage/>}></Route>
       <Route path='/home' element={<Home />}></Route>
        <Route path='/header' element={<Header/>}></Route>
+         <Route path='/dashboard' element={<Dashboard/>}></Route>
        {/* <Route path='/professional' element={<ProfessionalPage/>}></Route> */}
 
     </Routes>

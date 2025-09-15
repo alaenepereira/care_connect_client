@@ -5,6 +5,12 @@
   
 }
 
+body{
+  display: flex;
+  justify-content: center;
+  background-color:rgba(134, 131, 124, 0.486);
+}
+
 .App{
 display: flex;
   justify-content: center;

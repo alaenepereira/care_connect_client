@@ -1,4 +1,4 @@
-.bottom-nav {
+/* .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -27,4 +27,80 @@
   transform: scale(1.2);
   transition: 0.5s;
   color: rgb(12, 91, 182);
+} */
+
+
+
+
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+  z-index: 1000;
+}
+
+.nav-item {
+  text-align: center;
+  font-size: 22px;
+  cursor: pointer;
+  color: rgb(12, 91, 182);
+}
+
+.nav-item span {
+  display: block;
+  font-size: 12px;
+}
+
+/* Submenu lateral */
+.submenu {
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 160px;
+  height: 100%;
+  background: #00a896;
+  color: white;
+  padding: 20px;
+  z-index: 1100;
+  animation: slideIn 0.5s ease;
+
+  
+
+}
+
+.submenu h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.submenu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.submenu li {
+  margin: 12px 0;
+}
+
+.submenu a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.submenu a:hover {
+  text-decoration: underline;
+}
+
+@keyframes slideIn {
+  from { right: -250px; }
+  to { right: 0; }
 }

@@ -2,6 +2,7 @@ import Header from '../../Components/Header/index'
 import BottomNav from '../../Components/Button/BottomNav'
 import './style.css'
 import Doctor from '../../Components/DoctorsPage/DoctorCard'
+import Dashboard from '../Dashboard'
 
 
 
@@ -11,6 +12,7 @@ export default function Home() {
   return(
     <div className='home'>
       <Header />
+      <Dashboard/>
 
       <main className='content' >
       <h3 className='section-title'>Profissionais em destaque</h3>
