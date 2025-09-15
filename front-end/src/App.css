@@ -40,3 +40,22 @@
 .read-the-docs {
   color: #888;
 }
+
+  .containerPrincipal {
+    display: flex;
+    justify-content: space-around; /* espaço igual entre colunas */
+    align-items: flex-start; /* alinhar ao topo */
+    gap: 30px;
+    padding: 20px;
+    flex-wrap: wrap; /* caso a tela seja pequena, quebra a linha */
+  }
+  
+  .colunas > div {
+    background-color: #ffffff88;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    min-width: 250px;
+  }
+  
+  
