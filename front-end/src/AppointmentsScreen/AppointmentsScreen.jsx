@@ -109,7 +109,7 @@ const AppointmentsScreen = () => {
         setProfessionals(professionalsData.professionalList || []);
       }
     } catch (error) {
-      showSnackbar('Erro ao carregar dados', 'error');
+      showSnackbar('Erro ao carregar dados', error);
     }
   };
 
@@ -191,7 +191,7 @@ const AppointmentsScreen = () => {
       });
       
       if (response.ok) {
-        const result = await response.json();
+        const _result = await response.json();
         showSnackbar(
           editingAppointment 
             ? 'Agendamento atualizado com sucesso!' 

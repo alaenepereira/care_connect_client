@@ -53,7 +53,7 @@ return(
            });
            console.log('Profissional cadastrado com sucesso:', response.data);
          } catch (error) {
-           console.log("Erro ao se cadastrar");
+           console.log("Erro ao se cadastrar",error);
          }
        }
      

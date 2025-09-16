@@ -15,6 +15,7 @@ import AppointmentsScreen from './AppointmentsScreen/AppointmentsScreen.jsx'
 
 
 
+
 function App() {
  
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -41,7 +42,9 @@ function App() {
        <Route path="/patient/create" element={<PrivateRoute> <RegisterPatient /> <BottomNav/></PrivateRoute>} />
         <Route path="/patient/listAll" element={<PrivateRoute> <ListPatients /> <BottomNav/></PrivateRoute>} />
         <Route path="/edit-patient/:id" element={<RegisterPatient />} />
-         <Route path="/appointment" element={<<AppointmentsScreen /> />} />
+         <Route path="/appointments" element={<AppointmentsScreen/>} />
+        
+
           
       
     
