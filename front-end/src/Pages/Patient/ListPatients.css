@@ -1,8 +1,10 @@
 .list-patients-container {
-  padding: 20px;
-  max-width: 900px;
-  margin: 80px auto 20px auto; /* Adicione uma margem no topo para o Navbar fixo */
+  padding: 100px;
+  height: 100vh;
+  width: 100vw;
   font-family: Arial, sans-serif;
+  background-color:  #00a896;
+  
 }
 
 .list-patients-container h1 {
@@ -26,7 +28,8 @@
 }
 
 .patients-table {
-  width: 100%;
+  width: 60%;
+  margin-left: 450px;
   border-collapse: collapse;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background-color: #fff;

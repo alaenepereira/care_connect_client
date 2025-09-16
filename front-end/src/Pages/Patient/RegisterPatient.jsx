@@ -9,7 +9,7 @@ function RegisterPatient() {
   // `useNavigate` é usado para redirecionar o usuário após salvar.
   const navigate = useNavigate();
   // `isEditing` é um booleano que determina se estamos editando ou cadastrando.
-  const [isEditing, setIsEditing] = useState(!!id);
+  const [isEditing, _setIsEditing] = useState(!!id);
   // `formData` armazena os dados do formulário, inicializado com campos vazios.
   const [formData, setFormData] = useState({
     name: '',
@@ -64,7 +64,7 @@ function RegisterPatient() {
         await api.post('/patient/create', formData);
         alert('Paciente cadastrado!');
       }
-      navigate('/list-patient'); // Redireciona para a lista após o sucesso.
+      navigate('/patient/listAll'); // Redireciona para a lista após o sucesso.
     } catch (error) {
       console.error('Erro ao processar:', error.response.data);
       alert('Erro ao salvar. Verifique os dados.');

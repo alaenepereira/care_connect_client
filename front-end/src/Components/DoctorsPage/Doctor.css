@@ -1,13 +1,17 @@
+
 .doctor-card {
   background: #00a693c0;
   border-radius: 12px;
   padding: 16px;
   margin: 40px;
-  max-width: 200px;
+  max-width: 250px;
   display: inline-table;
+ margin-bottom: 100px;
+   
  
 
 }
+
 
 .doctor-header {
   display: flex;
@@ -34,7 +38,7 @@
 }
 
 .specialty {
-  color: rgba(128, 128, 128, 0.89);
+  color: rgb(61, 61, 61);
   font-size: 18px;
 }
 

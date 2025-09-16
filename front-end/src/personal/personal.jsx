@@ -8,12 +8,13 @@ function cabeçalho(){
  </h2>)
 }
 
-<br></br>
+
 function Applist() {
  const [professional, setProfessional] = useState([])
 
  async function Listprofessional() {
-   try{ const response = await axios.get('http://localhost:3000/professional/listAll')
+   try{ 
+    const response = await axios.get('http://localhost:3000/professional/listAll')
    setProfessional(response.data)
     console.log(response.data)
    }

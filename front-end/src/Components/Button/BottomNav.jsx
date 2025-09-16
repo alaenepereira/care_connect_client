@@ -1,29 +1,16 @@
-// import "./BottomNav.css";
-// import { NavLink } from "react-router-dom";
-
-// export default function BottomNav() {
-//   return (
-//     <nav className="bottom-nav">
-//       <NavLink to="/login"><img src="/src/assets/images/icons-login.png"  alt="login" /></NavLink>
-//       <NavLink to="/home" >🏠 Inicio</NavLink>
-//       <NavLink to="/patient">🩺 Pacientes</NavLink>
-//       <NavLink to="/professional">👤 Profissionais</NavLink>
-//       <NavLink to="/appointment">📅 Consultas</NavLink>
-//     </nav>
-//   );
-// }
-
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Link} from "react-router-dom";
 import { FaHome, FaUser, FaUserMd, FaCalendarCheck } from "react-icons/fa";
 import "./BottomNav.css";
 
 export default function BottomNavbar() {
   const [submenu, setSubmenu] = useState(null); 
+  const submenuRef = useRef(null);
+
 
 
 const routeMap = {
-  pacientes: "patients",
+  pacientes: "patient",
   profissionais: "professional",
   consultas: "appointments",
 };
@@ -32,6 +19,18 @@ const routeMap = {
   function toggleSubmenu(menu) {
     setSubmenu(submenu === menu ? null : menu);
   }
+
+   useEffect(() => {
+    function handleClickOutside(event) {
+      if (submenuRef.current && !submenuRef.current.contains(event.target)) {
+        setSubmenu(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+ 
 
   return (
     <div className="navbar">
@@ -78,7 +77,7 @@ const routeMap = {
       </li>
       <li>
         <Link
-          to={`/${routeMap[submenu]}/update`}
+          to={`/${routeMap[submenu]}/update/:id`}
           onClick={() => setSubmenu(null)}
         >
           Editar
