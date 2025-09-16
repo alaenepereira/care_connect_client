@@ -13,9 +13,15 @@ function Applist() {
  const [professional, setProfessional] = useState([])
 
  async function Listprofessional() {
+
    try{ const response = await axios.get('http://localhost:3000/professional/listAll')
    setProfessional(response.data.professionalList)
     console.log(response.data.professionalList)
+
+   try{ 
+    const response = await axios.get('http://localhost:3000/professional/listAll')
+   setProfessional(response.data)
+    console.log(response.data)
    }
    catch (error) {
    console.error('Erro ao buscar profissionais:', error)
@@ -33,7 +39,6 @@ return(
  </div>
 )
      }
-<br></br>
   //FUNÇAO PARA CADASTRAR O PROFISSIONAL
     function Appcreate() {
        const [newprofessional, setNewprofessional] = useState({
@@ -65,7 +70,7 @@ return(
              value={newprofessional.name}
              onChange={e => setNewprofessional({ ...newprofessional, name: e.target.value })}
            />
-           <br></br>
+         
            <label> Email:</label>
            <input
              type="email"
@@ -80,7 +85,7 @@ return(
             value={newprofessional.phone}
             onChange={e => setNewprofessional({ ...newprofessional, phone: e.target.value })}
             />
-           <br></br>
+          
            <label> Especialização:
            </label>
            <input
@@ -175,7 +180,7 @@ return(
             value={personalid2}
             onChange={(e) => setPersonalid2(e.target.value)}
           />
-          <br />
+    
     
           <label>Nome:</label>
           <input
@@ -186,8 +191,7 @@ return(
               setNewProfessional2({ ...newProfessional2, name: e.target.value })
             }
           />
-          <br />
-    
+      
           <label>Email:</label>
           <input
             type="email"
@@ -196,7 +200,7 @@ return(
               setNewProfessional2({ ...newProfessional2, email: e.target.value })
             }
           />
-          <br />
+     
     
           <label>Telefone:</label>
           <input
@@ -206,7 +210,7 @@ return(
               setNewProfessional2({ ...newProfessional2, phone: e.target.value })
             }
           />
-          <br />
+     
     
           <label>Especialização:</label>
           <input
@@ -219,7 +223,7 @@ return(
               })
             }
           />
-          <br />
+  
     
           <button onClick={Updateprofissionais}>Atualizar Profissional</button>
     

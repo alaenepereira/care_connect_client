@@ -1,0 +1,29 @@
+.register-container{
+   background: linear-gradient(rgba(15, 35, 150, 0.568), rgba(4, 105, 50, 0.5)), url('/src/assets/images/form.png') no-repeat;
+   background-position: left;
+  height: 100vh;
+  width: 100vw;
+ display: flex;
+  
+}
+.register-container input {
+   padding: 5px;
+   display: grid;
+   min-width: 300px;
+   min-height: 40px;
+   border-radius: 5px;
+
+  
+}
+
+.register-container button{
+   padding: 5px;
+   font-size: 18px ;
+   background-color: rgb(33, 182, 228);
+   border-radius: 5px;
+   
+}
+.register-container button:hover{
+   transition: 0.5s;
+   transform: scale(1.1);
+}

@@ -1,0 +1,43 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #00a896;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 20px;
+  color: white;
+}
+
+.header-left h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.subscribe-btn {
+  margin-top: 5px;
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: white;
+  color: #00a896;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.subscribe-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.header-right img {
+  height: 150px;
+  width: auto;
+ padding: 10px 10px;
+  display: flex;
+  align-items: center;
+ 
+  
+}
+
+
