@@ -1,4 +1,4 @@
-import './App.css';
+import './App.css'
 import React, { Children, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import LoginPage from './Pages/Login'
@@ -11,6 +11,7 @@ import BottomNav from './Components/Button/BottomNav'
 import Dashboard from './Pages/Dashboard'
 import RegisterPatient from './Pages/Patient/RegisterPatient.jsx';
 import ListPatients from './Pages/Patient/ListPatients.jsx'; 
+import AppointmentsScreen from './AppointmentsScreen/AppointmentsScreen.jsx'
 
 
 
@@ -40,6 +41,10 @@ function App() {
        <Route path="/patient/create" element={<PrivateRoute> <RegisterPatient /> <BottomNav/></PrivateRoute>} />
         <Route path="/patient/listAll" element={<PrivateRoute> <ListPatients /> <BottomNav/></PrivateRoute>} />
         <Route path="/edit-patient/:id" element={<RegisterPatient />} />
+         <Route path="/appointment" element={<<AppointmentsScreen /> />} />
+          
+      
+    
       
 
     </Routes>
