@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate, Link} from 'react-router-dom'
 import validateEmail from "../../utils/validateEmail";
 import './style.css'
-import api from "../../Services/api";
+import api from "../../services/api";
+
 
 
 export default function LoginPage({onLogin}){
