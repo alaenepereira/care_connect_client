@@ -16,16 +16,16 @@
   
   button {
     background-color: aqua;
-    padding: 10px;
+    padding: 1px;
     border: none;
-    border-radius: 6px;
+    border-radius: 0px;
     font-weight: bold;
     cursor: pointer;
   }
   
 body{
-    display:flex;
-    justify-content: center;
+   display: flex;
+   justify-content: first baseline;
     background-color:#b2f2bb;
 } 
 
