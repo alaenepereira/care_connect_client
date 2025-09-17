@@ -1,27 +1,22 @@
 import { useState } from 'react'
-import axios from 'axios'
 import React from 'react'
 import './personal.css'
+import api from '../services/api'
 
-function Cabecalho(){
-  return( <h2 className=" cabeçalho"> Área de Profissionais
+function HeaderProfessional(){
+  return( <h2 className=" header-pr"> Área de Profissionais
  </h2>)
 }
 
 //PARA BUSCAR OS PROFISSIONAL
-function Applist() {
+function AppList() {
  const [professional, setProfessional] = useState([])
 
- async function Listprofessional() {
+ async function ListProfessional() {
 
-   try{ const response = await axios.get('http://localhost:3000/professional/listAll')
+   try{ const response = await api.get('/professional/listAll')
    setProfessional(response.data.professionalList)
     console.log(response.data.professionalList)
-
-   try{ 
-    const response = await axios.get('http://localhost:3000/professional/listAll')
-   setProfessional(response.data)
-    console.log(response.data)
    }
    catch (error) {
    console.error('Erro ao buscar profissionais:', error)
@@ -30,7 +25,7 @@ function Applist() {
 
 return(
  <div>
-      <button onClick={Listprofessional}>Buscar Profissionais</button>
+      <button onClick={ListProfessional}>Buscar Profissionais</button>
    <ul>
      {professional.map((p,index)=>(
        <li key={index} className="list"> {p.name}</li>
@@ -40,20 +35,20 @@ return(
 )
      }
   //FUNÇAO PARA CADASTRAR O PROFISSIONAL
-    function Appcreate() {
-       const [newprofessional, setNewprofessional] = useState({
+    function AppCreate() {
+       const [newProfessional, setNewProfessional] = useState({
          name: '',
          email: '',
          phone: '',
          specialty: ''
        });
-       async function Createprofessional() {
+       async function CreateProfessional() {
          try {
-           const response = await axios.post('http://localhost:3000/professional/create', {
-             name: newprofessional.name,
-             email: newprofessional.email,
-             phone: newprofessional.phone,
-             specialty: newprofessional.specialty,
+           const response = await api.post('/professional/create', {
+             name: newProfessional.name,
+             email: newProfessional.email,
+             phone: newProfessional.phone,
+             specialty: newProfessional.specialty,
            });
            console.log('Profissional cadastrado com sucesso:', response.data);
          } catch (error) {
@@ -62,28 +57,28 @@ return(
        }
      
        return (
-         <div className="createlist">
+         <div className="createList">
            <label> Nome:</label>
            <input
              type="text"
              placeholder="Nome"
-             value={newprofessional.name}
-             onChange={e => setNewprofessional({ ...newprofessional, name: e.target.value })}
+             value={newProfessional.name}
+             onChange={e => setNewProfessional({ ...newProfessional, name: e.target.value })}
            />
          
            <label> Email:</label>
            <input
              type="email"
              placeholder="Email"
-             value={newprofessional.email}
-             onChange={e => setNewprofessional({ ...newprofessional, email: e.target.value })}
+             value={newProfessional.email}
+             onChange={e => setNewProfessional({ ...newProfessional, email: e.target.value })}
            />
            <label>Telefone:</label>
             <input
             type="text"
             placeholder="Telefone"
-            value={newprofessional.phone}
-            onChange={e => setNewprofessional({ ...newprofessional, phone: e.target.value })}
+            value={newProfessional.phone}
+            onChange={e => setNewProfessional({ ...newProfessional, phone: e.target.value })}
             />
           
            <label> Especialização:
@@ -91,21 +86,21 @@ return(
            <input
              type="text"
              placeholder="Especialização"
-             value={newprofessional.specialty}
-             onChange={e => setNewprofessional({ ...newprofessional, specialty: e.target.value })}/>
-           <button type="submit" onClick={Createprofessional}>Cadastrar Profissional</button>
+             value={newProfessional.specialty}
+             onChange={e => setNewProfessional({ ...newProfessional, specialty: e.target.value })}/>
+           <button type="submit" onClick={CreateProfessional}>Cadastrar Profissional</button>
          </div>
        );
      }
      //FUNÇAO PARA  BUSCAR O PROFISSIONAL POR ID
-     function Appid() {
-      const [professionalid, setProfessionalid] = useState('');
+     function AppId() {
+      const [professionalId, setProfessionalId] = useState('');
       const [professionalData, setProfessionalData] = useState(null);
       const [error, setError] = useState('');
     
-      async function Listprofessionalid() {
+      async function ListProfessionalId() {
         try {
-          const response = await axios.get(`http://localhost:3000/professional/listId/${professionalid.trim()}`);
+          const response = await api.get(`/professional/listId/${professionalId.trim()}`);
           setProfessionalData(response.data);
           setError('');
         } catch (error) {
@@ -121,10 +116,10 @@ return(
           <label>Qual profissional você quer? </label>
           <input
             type="text"
-            value={professionalid}
-            onChange={(e) => setProfessionalid(e.target.value)}
+            value={professionalId}
+            onChange={(e) => setProfessionalId(e.target.value)}
           />
-          <button  typ="submit" onClick={Listprofessionalid} className="botaoid">Buscar</button>
+          <button  typ="submit" onClick={ListProfessionalId} className="botao-id">Buscar</button>
     
           {error && <p>{error}</p>}
     
@@ -141,8 +136,8 @@ return(
     }
 
   
-    function Appupdate() {
-      const [personalid2, setPersonalid2] = useState('');
+    function AppUpdate() {
+      const [personalId2, setPersonalId2] = useState('');
       const [newProfessional2, setNewProfessional2] = useState({
         name: '',
         email: '',
@@ -151,10 +146,10 @@ return(
       });
       const [message, setMessage] = useState('');
     
-      async function Updateprofissionais() {
+      async function UpdateProfissionais() {
         try {
-          const response = await axios.put(
-            `http://localhost:3000/professional/update/${personalid2}`,
+          const response = await api.put(
+            `/professional/update/${personalId2}`,
             {
               name: newProfessional2.name,
               email: newProfessional2.email,
@@ -177,8 +172,8 @@ return(
           <label>ID do profissional: </label>
           <input
             type="text"
-            value={personalid2}
-            onChange={(e) => setPersonalid2(e.target.value)}
+            value={personalId2}
+            onChange={(e) => setPersonalId2(e.target.value)}
           />
     
     
@@ -225,7 +220,7 @@ return(
           />
   
     
-          <button onClick={Updateprofissionais}>Atualizar Profissional</button>
+          <button onClick={UpdateProfissionais}>Atualizar Profissional</button>
     
           {message && <p>{message}</p>}
         </div>
@@ -235,6 +230,6 @@ return(
     
     
 
-    export { Appid,Appupdate };
+    export { AppId,AppUpdate };
      
-export {Cabecalho,Applist,Appcreate};
+export {HeaderProfessional,AppList,AppCreate};
