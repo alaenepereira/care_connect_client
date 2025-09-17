@@ -25,7 +25,7 @@ function Applist() {
 <br></br>
 return(
  <div>
-      <button onClick={Listprofessional}>Buscar Profissionais</button>
+      <h2>Buscar profissionais</h2>
    <ul>
      {professional.map((p,index)=>(
        <li key={index} className="list"> {p.name}</li>
@@ -36,7 +36,7 @@ return(
      }
 <br></br>
     function Appcreate() {
-       const [newprofessional, setNewprofessional] = useState({
+       const [newProfessional, setNewprofessional] = useState({
          name: '',
          email: '',
          phone: '',
@@ -104,7 +104,7 @@ return(
     
       return (
         <div>
-          <label>Qual profissional você quer? (</label>
+          <label>Qual profissional você quer? </label>
           <input
             type="text"
             value={professionalid}
