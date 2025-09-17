@@ -12,7 +12,7 @@ import Dashboard from './Pages/Dashboard'
 import RegisterPatient from './Pages/Patient/RegisterPatient.jsx';
 import ListPatients from './Pages/Patient/ListPatients.jsx'; 
 import AppointmentsScreen from './AppointmentsScreen/AppointmentsScreen.jsx'
-import {HeaderProfessional, AppList, AppCreate, AppUpdate} from './personal/personal.jsx';
+import {HeaderProfessional, AppCreate, AppUpdate, ProfessionalList} from './personal/personal.jsx';
 
 
 
@@ -43,8 +43,8 @@ function App() {
        <Route path="/patient/create" element={<PrivateRoute> <RegisterPatient /> <BottomNav/></PrivateRoute>} />
         <Route path="/patient/listAll" element={<PrivateRoute> <ListPatients /> <BottomNav/></PrivateRoute>} />
         <Route path="/edit-patient/:id" element={<RegisterPatient />} />
-        <Route path="/professional/listAll" element={<PrivateRoute><HeaderProfessional/> <AppList /> </PrivateRoute> } />
-         <Route path="/professional/create" element={<PrivateRoute><HeaderProfessional/> <AppCreate  /> </PrivateRoute>} />
+        <Route path="/professional/listAll" element={<PrivateRoute><HeaderProfessional/> <ProfessionalList /> <BottomNav/> </PrivateRoute> } />
+         <Route path="/professional/create" element={<PrivateRoute><HeaderProfessional/> <AppCreate  /> <BottomNav/> </PrivateRoute>} />
            <Route path="/edit-professional/:id" element={<AppUpdate/>} />
          <Route path="/appointment" element={<AppointmentsScreen  />} />
          

@@ -8,32 +8,71 @@ function HeaderProfessional(){
  </h2>)
 }
 
-//PARA BUSCAR OS PROFISSIONAL
-function AppList() {
- const [professional, setProfessional] = useState([])
 
- async function ListProfessional() {
+function ProfessionalList() {
+  const [professionals, setProfessionals] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [searchName, setSearchName] = useState('');
 
-   try{ const response = await api.get('/professional/listAll')
-   setProfessional(response.data.professionalList)
-    console.log(response.data.professionalList)
-   }
-   catch (error) {
-   console.error('Erro ao buscar profissionais:', error)
- }
+
+  async function fetchProfessionals() {
+    setIsLoading(true);
+    try {
+      const response = await api.get('/professional/listAll');
+      setProfessionals(response.data.professionalList);
+    } catch (error) {
+      setError('Failed to fetch professionals');
+      console.error('Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const filteredProfessionals = professionals.filter(professional =>
+    professional.name.toLowerCase().includes(searchName.toLowerCase())
+  );
+
+  return (
+    <div className="list-container">
+      <div className="search-section">
+        <input
+          type="text"
+          placeholder="Buscar por nome..."
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+          className="search-input"
+        />
+        <button 
+          onClick={fetchProfessionals}
+          disabled={isLoading}
+          className="fetch-button"
+        >
+          {isLoading ? 'Carregando...' : 'Buscar Profissionais'}
+        </button>
+      </div>
+      
+      {error && <p className="error-message">{error}</p>}
+      
+      <div className="professionals-grid">
+        {filteredProfessionals.map((professional) => (
+          <div key={professional.id} className="professional-card">
+            <h3>{professional.name}</h3>
+            <div className="professional-details">
+              <p><strong>Email:</strong> {professional.email}</p>
+              <p><strong>Telefone:</strong> {professional.phone}</p>
+              <p><strong>Especialidade:</strong> {professional.specialty}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {filteredProfessionals.length === 0 && !isLoading && (
+        <p className="no-results">Nenhum profissional encontrado</p>
+      )}
+    </div>
+  );
 }
-
-return(
- <div>
-      <button onClick={ListProfessional}>Buscar Profissionais</button>
-   <ul>
-     {professional.map((p,index)=>(
-       <li key={index} className="list"> {p.name}</li>
-     ))}
-   </ul>
- </div>
-)
-     }
   //FUNÇAO PARA CADASTRAR O PROFISSIONAL
     function AppCreate() {
        const [newProfessional, setNewProfessional] = useState({
@@ -50,7 +89,7 @@ return(
              phone: newProfessional.phone,
              specialty: newProfessional.specialty,
            });
-           console.log('Profissional cadastrado com sucesso:', response.data);
+           alert('Profissional cadastrado com sucesso:', response.data);
          } catch (error) {
            console.log("Erro ao se cadastrar",error);
          }
@@ -90,8 +129,11 @@ return(
              onChange={e => setNewProfessional({ ...newProfessional, specialty: e.target.value })}/>
            <button type="submit" onClick={CreateProfessional}>Cadastrar Profissional</button>
          </div>
+       
        );
+        
      }
+    
      //FUNÇAO PARA  BUSCAR O PROFISSIONAL POR ID
      function AppId() {
       const [professionalId, setProfessionalId] = useState('');
@@ -232,4 +274,4 @@ return(
 
     export { AppId,AppUpdate };
      
-export {HeaderProfessional,AppList,AppCreate};
+export {HeaderProfessional,ProfessionalList,AppCreate};

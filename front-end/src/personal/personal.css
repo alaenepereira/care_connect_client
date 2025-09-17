@@ -1,11 +1,46 @@
 /* Header Styles */
 .header-pr {
+  margin-top: 30px;
   text-align: center;
   padding: 20px;
   background-color: #f5f5f5;
   margin-bottom: 30px;
   color: #333;
   border-bottom: 2px solid #ddd;
+}
+
+.list-container {
+padding: 20px;
+height: 90vh;
+width: 80vw;
+
+margin-bottom: 150px;
+  
+}
+.createList,
+.search-section {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.search-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input,
+.createList input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 
@@ -26,6 +61,20 @@
   background-color: #00a896;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.professional-card {
+  background-color: #00a896; /* verde */
+  color: white;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+}
+
+.professional-card:hover {
+  transform: translateY(-3px);
 }
 
 .createList label,
@@ -53,7 +102,7 @@ div input:focus {
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
-/* Button Styles */
+
 button {
   background-color: #007bff;
   color: white;
@@ -73,7 +122,7 @@ button:hover {
   margin-left: 10px;
 }
 
-/* Error and Message Styles */
+
 p.error {
   color: #dc3545;
   margin: 10px 0;
@@ -82,7 +131,7 @@ p.error {
   border-radius: 4px;
 }
 
-/* Professional Details Styles */
+
 .professional-details {
   margin-top: 20px;
   padding: 15px;
