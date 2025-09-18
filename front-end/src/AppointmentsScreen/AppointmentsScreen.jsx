@@ -5,14 +5,20 @@ import {
   TableContainer, TableHead, TableRow, Button, Dialog, DialogTitle,
   DialogContent, DialogActions, TextField, MenuItem, Grid, Alert,
   Snackbar, IconButton, Chip, Card, CardContent, Tabs, Tab, Avatar,
-  LinearProgress, Tooltip, Fab, InputAdornment, FormControl, InputLabel
+  LinearProgress, Tooltip, Fab, InputAdornment, FormControl
 } from '@mui/material';
 import {
   Add as AddIcon, Edit as EditIcon, Search as SearchIcon,
   CalendarMonth as CalendarIcon, Person as PersonIcon,
-  LocalHospital as HospitalIcon, EventAvailable as EventIcon
+  LocalHospital as HospitalIcon, EventAvailable as EventIcon,
+  Delete as DeleteIcon
 } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+// URLs CORRETAS - SEM o /api
+const APPOINTMENTS_URL = 'http://localhost:3000/appointment/listAll';
+const PATIENTS_URL = 'http://localhost:3000/patient/listAll';
+const PROFESSIONALS_URL = 'http://localhost:3000/professional/listAll';
 
 // Criar tema personalizado com a cor #00a896
 const theme = createTheme({
@@ -61,10 +67,10 @@ const AppointmentsScreen = () => {
   const [tabValue, setTabValue] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Form state
+  // Form state - VALORES CORRETOS DO ENUM (FEMININO)
   const [formData, setFormData] = useState({
     data: '',
-    status: 'AGENDADO',
+    status: 'AGENDADA',
     value: '',
     observations: '',
     patientId: '',
@@ -75,7 +81,7 @@ const AppointmentsScreen = () => {
   const fetchAppointments = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3000/api/appointment/listAll');
+      const response = await fetch(APPOINTMENTS_URL);
       
       if (response.ok) {
         const data = await response.json();
@@ -94,7 +100,7 @@ const AppointmentsScreen = () => {
   const fetchData = async () => {
     try {
       // Fetch patients
-      const patientsResponse = await fetch('http://localhost:3000/api/patient/listAll');
+      const patientsResponse = await fetch(PATIENTS_URL);
       
       if (patientsResponse.ok) {
         const patientsData = await patientsResponse.json();
@@ -102,14 +108,14 @@ const AppointmentsScreen = () => {
       }
       
       // Fetch professionals
-      const professionalsResponse = await fetch('http://localhost:3000/api/professional/listAll');
+      const professionalsResponse = await fetch(PROFESSIONALS_URL);
       
       if (professionalsResponse.ok) {
         const professionalsData = await professionalsResponse.json();
         setProfessionals(professionalsData.professionalList || []);
       }
     } catch (error) {
-      showSnackbar('Erro ao carregar dados', error);
+      showSnackbar('Erro ao carregar dados', 'error');
     }
   };
 
@@ -137,7 +143,7 @@ const AppointmentsScreen = () => {
       setEditingAppointment(null);
       setFormData({
         data: '',
-        status: 'AGENDADO',
+        status: 'AGENDADA',
         value: '',
         observations: '',
         patientId: '',
@@ -171,8 +177,8 @@ const AppointmentsScreen = () => {
     
     try {
       const url = editingAppointment 
-        ? `http://localhost:3000/api/appointment/update/${editingAppointment.id}`
-        : 'http://localhost:3000/api/appointment/create';
+        ? `http://localhost:3000/appointment/update/${editingAppointment.id}`
+        : 'http://localhost:3000/appointment/create';
       
       const method = editingAppointment ? 'PUT' : 'POST';
       
@@ -191,7 +197,6 @@ const AppointmentsScreen = () => {
       });
       
       if (response.ok) {
-        const _result = await response.json();
         showSnackbar(
           editingAppointment 
             ? 'Agendamento atualizado com sucesso!' 
@@ -222,10 +227,30 @@ const AppointmentsScreen = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'AGENDADO': return 'primary';
-      case 'CONCLUIDO': return 'success';
-      case 'CANCELADO': return 'error';
+      case 'AGENDADA': return 'primary';
+      case 'CONCLUIDA': return 'success';
+      case 'CANCELADA': return 'error';
       default: return 'default';
+    }
+  };
+
+  const handleDelete = async (appointmentId) => {
+    if (!window.confirm("Tem certeza que deseja excluir este agendamento?")) return;
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/appointment/delete/${appointmentId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        showSnackbar("Agendamento deletado com sucesso!", "success");
+        fetchAppointments();
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Erro ao deletar agendamento");
+      }
+    } catch (error) {
+      showSnackbar(error.message, "error");
     }
   };
 
@@ -241,11 +266,11 @@ const AppointmentsScreen = () => {
     }
     
     if (tabValue === 2) {
-      return appointment.status === 'AGENDADO';
+      return appointment.status === 'AGENDADA';
     }
     
     if (tabValue === 3) {
-      return appointment.status === 'CONCLUIDO';
+      return appointment.status === 'CONCLUIDA';
     }
     
     if (searchTerm) {
@@ -263,7 +288,7 @@ const AppointmentsScreen = () => {
   const upcomingAppointments = appointments.filter(appointment => {
     const date = new Date(appointment.data);
     const now = new Date();
-    return date >= now && appointment.status === 'AGENDADO';
+    return date >= now && appointment.status === 'AGENDADA';
   }).slice(0, 3);
 
   if (loading) {
@@ -296,7 +321,7 @@ const AppointmentsScreen = () => {
           </Box>
 
           <Grid container spacing={3}>
-            <Grid item xs={12} md={8}>
+            <Grid size={{ xs: 12, md: 8 }}>
               <Paper elevation={2} sx={{ p: 3 }}>
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
                   <Tabs 
@@ -378,7 +403,7 @@ const AppointmentsScreen = () => {
                               label={appointment.status} 
                               color={getStatusColor(appointment.status)}
                               size="small"
-                              variant={appointment.status === 'AGENDADO' ? 'filled' : 'outlined'}
+                              variant={appointment.status === 'AGENDADA' ? 'filled' : 'outlined'}
                             />
                           </TableCell>
                           <TableCell align="center">
@@ -389,6 +414,30 @@ const AppointmentsScreen = () => {
                                 size="small"
                               >
                                 <EditIcon />
+
+                                <TableCell align="center">
+                                  <Tooltip title="Editar">
+                                    <IconButton
+                                      color="primary"
+                                      onClick={() => handleOpenDialog(appointment)}
+                                      size="small"
+                                    >
+                                      <EditIcon />
+                                    </IconButton>
+                                  </Tooltip>
+
+                                  <Tooltip title="Excluir">
+                                    <IconButton
+                                      color="error"
+                                      onClick={() => handleDelete(appointment.id)}
+                                      size="small"
+                                    >
+
+                                      <DeleteIcon />
+                                    </IconButton>
+                                  </Tooltip>
+                                </TableCell>
+
                               </IconButton>
                             </Tooltip>
                           </TableCell>
@@ -409,7 +458,7 @@ const AppointmentsScreen = () => {
               </Paper>
             </Grid>
 
-            <Grid item xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Paper elevation={2} sx={{ p: 3, mb: 3, borderLeft: `4px solid #00a896` }}>
                 <Typography variant="h6" gutterBottom color="primary.main" fontWeight="bold">
                   Próximos Agendamentos
@@ -439,38 +488,40 @@ const AppointmentsScreen = () => {
               </Paper>
 
               <Paper elevation={2} sx={{ p: 3, borderLeft: `4px solid #f9a826` }}>
-                <Typography variant="h6" gutterBottom color="primary.main" fontWeight="bold">
-                  Estatísticas
-                </Typography>
-                
-                <Box>
-                  <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                    <Typography variant="body2">Total de agendamentos:</Typography>
-                    <Typography variant="body2" fontWeight="bold" color="primary.main">{appointments.length}</Typography>
-                  </Box>
-                  
-                  <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                    <Typography variant="body2">Agendados:</Typography>
-                    <Typography variant="body2" fontWeight="bold" color="primary.main">
-                      {appointments.filter(a => a.status === 'AGENDADO').length}
-                    </Typography>
-                  </Box>
-                  
-                  <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                    <Typography variant="body2">Concluídos:</Typography>
-                    <Typography variant="body2" fontWeight="bold" color="primary.main">
-                      {appointments.filter(a => a.status === 'CONCLUIDO').length}
-                    </Typography>
-                  </Box>
-                  
-                  <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography variant="body2">Cancelados:</Typography>
-                    <Typography variant="body2" fontWeight="bold" color="primary.main">
-                      {appointments.filter(a => a.status === 'CANCELADO').length}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Paper>
+  <Typography variant="h6" gutterBottom color="primary.main" fontWeight="bold">
+    Estatísticas
+  </Typography>
+  
+  <Box>
+    <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+      <Typography variant="body2">Total de agendamentos:</Typography>
+      <Typography variant="body2" fontWeight="bold" color="primary.main">
+        {appointments.length}
+      </Typography>
+    </Box>
+    
+    <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+      <Typography variant="body2">Agendados:</Typography>
+      <Typography variant="body2" fontWeight="bold" color="primary.main">
+        {appointments.filter(a => a.status === 'AGENDADA').length}
+      </Typography>
+    </Box>
+    
+    <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+      <Typography variant="body2">Concluídos:</Typography>
+      <Typography variant="body2" fontWeight="bold" color="primary.main">
+        {appointments.filter(a => a.status === 'CONCLUIDA').length}
+      </Typography>
+    </Box>
+    
+    <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Typography variant="body2">Cancelados:</Typography>
+      <Typography variant="body2" fontWeight="bold" color="primary.main">
+        {appointments.filter(a => a.status === 'CANCELADA').length}
+      </Typography>
+    </Box>
+  </Box>
+</Paper>
             </Grid>
           </Grid>
 
@@ -491,10 +542,9 @@ const AppointmentsScreen = () => {
             <form onSubmit={handleSubmit}>
               <DialogContent sx={{ mt: 2 }}>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <TextField
                       fullWidth
-                      label="Data e Hora *"
                       type="datetime-local"
                       name="data"
                       value={formData.data}
@@ -503,43 +553,40 @@ const AppointmentsScreen = () => {
                       required
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <FormControl fullWidth required>
-                      <InputLabel>Status *</InputLabel>
                       <TextField
                         select
                         name="status"
                         value={formData.status}
-                        label="Status *"
                         onChange={handleInputChange}
                       >
-                        <MenuItem value="AGENDADO">Agendado</MenuItem>
-                        <MenuItem value="CONCLUIDO">Concluído</MenuItem>
-                        <MenuItem value="CANCELADO">Cancelado</MenuItem>
+                        <MenuItem value="AGENDADA">Agendada</MenuItem>
+                        <MenuItem value="CONCLUIDA">Concluída</MenuItem>
+                        <MenuItem value="CANCELADA">Cancelada</MenuItem>
                       </TextField>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <TextField
                       fullWidth
-                      label="Valor (R$)"
                       type="number"
                       name="value"
                       value={formData.value}
                       onChange={handleInputChange}
                       inputProps={{ step: "0.01", min: "0" }}
+                      placeholder="Valor (R$)"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <FormControl fullWidth required>
-                      <InputLabel>Paciente *</InputLabel>
                       <TextField
                         select
                         name="patientId"
                         value={formData.patientId}
-                        label="Paciente *"
                         onChange={handleInputChange}
                       >
+                        <MenuItem value="" disabled>Selecione o paciente</MenuItem>
                         {patients.map((patient) => (
                           <MenuItem key={patient.id} value={patient.id}>
                             {patient.name}
@@ -548,16 +595,15 @@ const AppointmentsScreen = () => {
                       </TextField>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <FormControl fullWidth required>
-                      <InputLabel>Profissional *</InputLabel>
                       <TextField
                         select
                         name="professionalId"
                         value={formData.professionalId}
-                        label="Profissional *"
                         onChange={handleInputChange}
                       >
+                        <MenuItem value="" disabled>Selecione o profissional</MenuItem>
                         {professionals.map((professional) => (
                           <MenuItem key={professional.id} value={professional.id}>
                             {professional.name} - {professional.specialty}
@@ -566,15 +612,15 @@ const AppointmentsScreen = () => {
                       </TextField>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid size={{ xs: 12 }}>
                     <TextField
                       fullWidth
                       multiline
                       rows={3}
-                      label="Observações"
                       name="observations"
                       value={formData.observations}
                       onChange={handleInputChange}
+                      placeholder="Observações"
                     />
                   </Grid>
                 </Grid>
