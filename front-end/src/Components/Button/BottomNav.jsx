@@ -86,14 +86,6 @@ const routeMap = {
           Cadastrar
         </Link>
       </li>
-      <li>
-        <Link
-          to={`/${routeMap[submenu]}/update/:id`}
-          onClick={() => setSubmenu(null)}
-        >
-          Editar
-        </Link>
-      </li>
      </>
       )}
     </ul>

@@ -22,7 +22,7 @@ function ProfessionalList() {
       const response = await api.get('/professional/listAll');
       setProfessionals(response.data.professionalList);
     } catch (error) {
-      setError('Failed to fetch professionals');
+      setError('Falha ao procurar o profissional');
       console.error('Error:', error);
     } finally {
       setIsLoading(false);
@@ -104,7 +104,7 @@ function ProfessionalList() {
              value={newProfessional.name}
              onChange={e => setNewProfessional({ ...newProfessional, name: e.target.value })}
            />
-         
+           <br></br>
            <label> Email:</label>
            <input
              type="email"
@@ -142,13 +142,11 @@ function ProfessionalList() {
     
       async function ListProfessionalId() {
         try {
-          const response = await api.get(`/professional/listId/${professionalId.trim()}`);
+          const response = await api.get(`/professional/${professionalId}`);
           setProfessionalData(response.data);
           setError('');
         } catch (error) {
           console.error('Erro ao buscar profissional:', error);
-          setError('Profissional não encontrado ou erro na requisição');
-          setProfessionalData(null)
           
         }
       }
@@ -161,9 +159,9 @@ function ProfessionalList() {
             value={professionalId}
             onChange={(e) => setProfessionalId(e.target.value)}
           />
-          <button  typ="submit" onClick={ListProfessionalId} className="botao-id">Buscar</button>
+          <button onClick={ListProfessionalId} className="botaoid">Buscar</button>
     
-          {error && <p>{error}</p>}
+          {error && <p style={{ color: 'red' }}>{error}</p>}
     
           {professionalData && (
             <div style={{ marginTop: '10px' }}>
@@ -176,102 +174,7 @@ function ProfessionalList() {
         </div>
       );
     }
-
-  
-    function AppUpdate() {
-      const [personalId2, setPersonalId2] = useState('');
-      const [newProfessional2, setNewProfessional2] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        specialty: ''
-      });
-      const [message, setMessage] = useState('');
     
-      async function UpdateProfissionais() {
-        try {
-          const response = await api.put(
-            `/professional/update/${personalId2}`,
-            {
-              name: newProfessional2.name,
-              email: newProfessional2.email,
-              phone: newProfessional2.phone,
-              specialty: newProfessional2.specialty
-            }
-          );
-          console.log('Profissional atualizado:', response.data);
-          setMessage('Profissional atualizado com sucesso!');
-        } catch (error) {
-          console.error('Erro ao atualizar os dados:', error);
-          setMessage('Erro ao atualizar o profissional.');
-        }
-      }
-    
-      return (
-        <div>
-          <h3>Atualizar Profissional</h3>
-    
-          <label>ID do profissional: </label>
-          <input
-            type="text"
-            value={personalId2}
-            onChange={(e) => setPersonalId2(e.target.value)}
-          />
-    
-    
-          <label>Nome:</label>
-          <input
-            type="text"
-            placeholder="Nome"
-            value={newProfessional2.name}
-            onChange={(e) =>
-              setNewProfessional2({ ...newProfessional2, name: e.target.value })
-            }
-          />
-      
-          <label>Email:</label>
-          <input
-            type="email"
-            value={newProfessional2.email}
-            onChange={(e) =>
-              setNewProfessional2({ ...newProfessional2, email: e.target.value })
-            }
-          />
-     
-    
-          <label>Telefone:</label>
-          <input
-            type="text"
-            value={newProfessional2.phone}
-            onChange={(e) =>
-              setNewProfessional2({ ...newProfessional2, phone: e.target.value })
-            }
-          />
-     
-    
-          <label>Especialização:</label>
-          <input
-            type="text"
-            value={newProfessional2.specialty}
-            onChange={(e) =>
-              setNewProfessional2({
-                ...newProfessional2,
-                specialty: e.target.value
-              })
-            }
-          />
-  
-    
-          <button onClick={UpdateProfissionais}>Atualizar Profissional</button>
-    
-          {message && <p>{message}</p>}
-        </div>
-      );
-    }
-    
-    
-    
-
-    export { AppId,AppUpdate };
+    export { AppId };
      
 export {HeaderProfessional,ProfessionalList,AppCreate};

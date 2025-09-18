@@ -1,37 +1,3 @@
-/* .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color:white;
- 
-}
-
-.bottom-nav a {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-  font-size: 20px;
-  padding: 8px 10px;
-  transition: 0.5s;
-}
-
-.bottom-nav a {
-  color: #000000;
-  font-weight: bold;
-}
-.bottom-nav a:hover{
-  cursor: pointer;
-  transform: scale(1.2);
-  transition: 0.5s;
-  color: rgb(12, 91, 182);
-} */
-
-
-
-
 .navbar {
   position: fixed;
   bottom: 0;
@@ -43,6 +9,7 @@
   align-items: center;
   padding: 10px 0;
   border-top: 1px solid #ccc;
+  z-index: 1000;
  
 }
 
@@ -64,13 +31,14 @@
   position: fixed;
   left: 0;
   top: 0;
-  width: 160px;
+  width: 158px;
   height: 93%;
   background: #00a896;
   color: white;
   padding: 20px;
-  z-index: 1100;
-  animation: slideIn 0.5s ease;
+  z-index: 1101;
+  animation: slideIn 0.4s ease;
+   box-shadow: 2px 0 8px rgba(0,0,0,0.3);
 
 
 }
@@ -83,6 +51,7 @@
 .submenu ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .submenu li {
@@ -98,8 +67,39 @@
 .submenu a:hover {
   text-decoration: underline;
 }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 1100;
+}
 
 @keyframes slideIn {
-  from { right: -250px; }
-  to { right: 0; }
+  from { left: -250px; }
+  to { left: 0; }
 }
+
+@media (max-width: 768px) {
+  .nav-item {
+    font-size: 18px;
+  }
+  .nav-item span {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-item {
+    font-size: 16px;
+  }
+  .nav-item span {
+    font-size: 10px;
+  }
+  .submenu {
+    width: 180px;
+  }
+}
+

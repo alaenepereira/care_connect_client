@@ -12,7 +12,8 @@ import Dashboard from './Pages/Dashboard'
 import RegisterPatient from './Pages/Patient/RegisterPatient.jsx';
 import ListPatients from './Pages/Patient/ListPatients.jsx'; 
 import AppointmentsScreen from './AppointmentsScreen/AppointmentsScreen.jsx'
-import {HeaderProfessional, AppCreate, AppUpdate, ProfessionalList} from './personal/personal.jsx';
+import {HeaderProfessional, AppCreate, ProfessionalList} from './personal/personal.jsx';
+import BackButton from './utils/BackButton.jsx'
 
 
 
@@ -30,8 +31,9 @@ function App() {
   }
   return(
     <BrowserRouter>
-   
+  
     <Routes>
+        
       <Route path='/' element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />}></Route>
       <Route path='/login' element={<LoginPage onLogin={handleLogin}/>}></Route>
       <Route path='/register' element={<Register/>}></Route>
@@ -45,8 +47,7 @@ function App() {
         <Route path="/edit-patient/:id" element={<RegisterPatient />} />
         <Route path="/professional/listAll" element={<PrivateRoute><HeaderProfessional/> <ProfessionalList /> <BottomNav/> </PrivateRoute> } />
          <Route path="/professional/create" element={<PrivateRoute><HeaderProfessional/> <AppCreate  /> <BottomNav/> </PrivateRoute>} />
-           <Route path="/edit-professional/:id" element={<AppUpdate/>} />
-         <Route path="/appointment" element={<AppointmentsScreen  />} />
+         <Route path="/appointments" element={<PrivateRoute><AppointmentsScreen  /> <BottomNav></BottomNav></PrivateRoute>} />
          
           
       
@@ -59,4 +60,3 @@ function App() {
 }
 
 export default App;
-
