@@ -8,7 +8,7 @@ export default function BackButton() {
   const location = useLocation();
 const navigate = useNavigate();
 
- const hiddenRoutes = ['/login', '/forgot-password'];
+ const hiddenRoutes = ['/login', '/forgot-password', '/home'];
 
   const showBackButton = !hiddenRoutes.includes(location.pathname);
 

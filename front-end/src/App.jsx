@@ -31,7 +31,7 @@ function App() {
   }
   return(
     <BrowserRouter>
-  
+   <BackButton/>
     <Routes>
         
       <Route path='/' element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />}></Route>
