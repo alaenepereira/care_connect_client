@@ -6,7 +6,7 @@ import ForgotPasswordPage from './Pages/Login/ForgotPassword'
 import { Navigate } from 'react-router-dom'
 import Register from './Components/Register'
 import Header from './Components/Header'
-import Home from './Pages/home/index.jsx'
+import Home from './Pages/Home'
 import BottomNav from './Components/Button/BottomNav'
 import Dashboard from './Pages/Dashboard'
 import RegisterPatient from './Pages/Patient/RegisterPatient.jsx';

@@ -115,7 +115,7 @@ const AppointmentsScreen = () => {
         setProfessionals(professionalsData.professionalList || []);
       }
     } catch (error) {
-      showSnackbar('Erro ao carregar dados', 'error');
+      showSnackbar('Erro ao carregar dados', error);
     }
   };
 
