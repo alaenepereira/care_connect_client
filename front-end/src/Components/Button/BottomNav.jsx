@@ -56,9 +56,20 @@ const routeMap = {
       
     
 {submenu && (
-  <div className="submenu">
+  <div className="submenu" ref={submenuRef}>
     <h3>{submenu.toUpperCase()}</h3>
     <ul>
+       {submenu === "consultas" ? (
+        <li>
+          <Link
+            to="/appointments"
+            onClick={() => setSubmenu(null)}
+          >
+            Gerenciar Consultas
+          </Link>
+        </li>
+      ) :(
+        <>
       <li>
         <Link
           to={`/${routeMap[submenu]}/listAll`}
@@ -75,22 +86,8 @@ const routeMap = {
           Cadastrar
         </Link>
       </li>
-      <li>
-        <Link
-          to={`/${routeMap[submenu]}/update/:id`}
-          onClick={() => setSubmenu(null)}
-        >
-          Editar
-        </Link>
-      </li>
-      <li>
-        <Link
-          to={`/${routeMap[submenu]}/delete`}
-          onClick={() => setSubmenu(null)}
-        >
-          Excluir
-        </Link>
-      </li>
+     </>
+      )}
     </ul>
   </div>
 )}

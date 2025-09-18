@@ -17,3 +17,41 @@
   font-weight: bold;
   text-align: center;
 }
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 0.5rem auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px; 
+}
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 18px;
+  }
+
+  .card {
+    max-width: 90%;
+    padding: 0.8rem;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 16px;
+    margin: 0.8rem 0;
+  }
+
+  .card {
+    max-width: 95%;
+    padding: 0.7rem;
+    margin: 0.5rem auto;
+  }
+
+  .content {
+    padding: 0.5rem;
+  }
+}

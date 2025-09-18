@@ -8,23 +8,30 @@ export default function Dashboard() {
   const [doctorCount, setDoctorCount] = useState(0);
   const [appointmentCount, setAppointmentCount] = useState(0);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const patientRes = await api.get("/patient/listAll");
-        const doctorRes = await api.get("/professional/listAll");
-        const appointmentRes = await api.get("/appointment/listAll");
+useEffect(() => {
+  async function fetchData() {
+    try {
+      const [patientRes, doctorRes, appointmentRes] = await Promise.all([
+        api.get("/patient/listAll"),
+        api.get("/professional/listAll"),
+        api.get("/appointment/listAll"),
+      ]);
 
-        setPatientCount(patientRes.data.length);
-       setDoctorCount(doctorRes.data.length);
-       setAppointmentCount(appointmentRes.data.length);
-      } catch (err) {
-        console.error("Erro ao buscar dados:", err);
-      }
+      setPatientCount(Array.isArray(patientRes.data) ? patientRes.data.length : 0);
+      setDoctorCount(Array.isArray(doctorRes.data.professionalList) ? doctorRes.data.professionalList.length : 0);
+      setAppointmentCount(Array.isArray(appointmentRes.data.listAppointments) ? appointmentRes.data.listAppointments.length : 0);
+
+    } catch (err) {
+      console.error("Erro ao buscar dados:", err);
+      setPatientCount(0);
+      setDoctorCount(0);
+      setAppointmentCount(0);
     }
+  }
 
-    fetchData();
-  }, []);
+  fetchData();
+}, []);
+
 
   return (
     <div className="dashboard">
