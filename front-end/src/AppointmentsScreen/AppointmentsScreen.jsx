@@ -10,7 +10,8 @@ import {
 import {
   Add as AddIcon, Edit as EditIcon, Search as SearchIcon,
   CalendarMonth as CalendarIcon, Person as PersonIcon,
-  LocalHospital as HospitalIcon, EventAvailable as EventIcon
+  LocalHospital as HospitalIcon, EventAvailable as EventIcon,
+  Delete as DeleteIcon
 } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -233,6 +234,26 @@ const AppointmentsScreen = () => {
     }
   };
 
+  const handleDelete = async (appointmentId) => {
+    if (!window.confirm("Tem certeza que deseja excluir este agendamento?")) return;
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/appointment/delete/${appointmentId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        showSnackbar("Agendamento deletado com sucesso!", "success");
+        fetchAppointments();
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Erro ao deletar agendamento");
+      }
+    } catch (error) {
+      showSnackbar(error.message, "error");
+    }
+  };
+
   const filteredAppointments = appointments.filter(appointment => {
     if (tabValue === 1) {
       const date = new Date(appointment.data);
@@ -393,6 +414,30 @@ const AppointmentsScreen = () => {
                                 size="small"
                               >
                                 <EditIcon />
+
+                                <TableCell align="center">
+                                  <Tooltip title="Editar">
+                                    <IconButton
+                                      color="primary"
+                                      onClick={() => handleOpenDialog(appointment)}
+                                      size="small"
+                                    >
+                                      <EditIcon />
+                                    </IconButton>
+                                  </Tooltip>
+
+                                  <Tooltip title="Excluir">
+                                    <IconButton
+                                      color="error"
+                                      onClick={() => handleDelete(appointment.id)}
+                                      size="small"
+                                    >
+
+                                      <DeleteIcon />
+                                    </IconButton>
+                                  </Tooltip>
+                                </TableCell>
+
                               </IconButton>
                             </Tooltip>
                           </TableCell>
